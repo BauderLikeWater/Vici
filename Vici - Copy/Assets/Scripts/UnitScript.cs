@@ -14,6 +14,7 @@ public class UnitScript : MonoBehaviour
     Vector3 Destin;   // Destination for travel 
     public GameObject Target;    // Target for attacking
     string State = "Idle";
+    int team = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +27,25 @@ public class UnitScript : MonoBehaviour
         
     }
 
+    //sets a new target, and an appropriate state for the target
+    //I intend for this to be called when the player clicks on an object while 
+    //this unit is selected
     public void setNewTargetState(GameObject newObject, string newState)
     {
         Target = newObject;
-        
-        if(Target.GetType() == )
+
+        if (Target.name.Contains("Territory") ){
+            if (Target.GetComponent<TerritoryScript>().team == this.team && Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
+                State = "Sacrificing";
+            else
+                State = "Attacking";
+        }
+        else if (Target.name.Contains("Unit"))
+        {
+            if (Target.GetComponent<UnitScript>().team == this.team)
+                State = "Attacking";
+        }
+        //friendly units and other objects will be ignored, so no if case for them
     }
 
 
@@ -101,15 +116,16 @@ public class UnitScript : MonoBehaviour
         }
     }
 
-  
+    //WIP attack function
     private void Attack() {
         print("attack");
     }
-    
+    //WIP sacrifice function
     private void Sacrifice() {
         print("sacrifice");
     }
 
+    //Keybinds for testing
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
@@ -123,6 +139,7 @@ public class UnitScript : MonoBehaviour
                 State = "Attacking";
     }
 
+    //updates independently of framerate
     private void FixedUpdate()
     {
 
