@@ -9,7 +9,6 @@ public class TerritoryScript : MonoBehaviour
     public int team = 0;
     float genCounter = 0f;
     public float genRate = 10f;
-    int unitCount = 0;
 
 
     // Start is called before the first frame update

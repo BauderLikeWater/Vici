@@ -118,11 +118,16 @@ public class UnitScript : MonoBehaviour
 
     //WIP attack function
     private void Attack() {
-        print("attack");
+        if (Target.GetComponent<UnitScript>() != null)
+            Destroy(Target.GetComponent<UnitScript>().gameObject);
+        else if(Target.GetComponent<TerritoryScript>() != null)
+            Target.GetComponent<TerritoryScript>().adjustHealth(team);
     }
     //WIP sacrifice function
     private void Sacrifice() {
-        print("sacrifice");
+        //needs to call the territory's add health function then destroy self
+        Target.GetComponent<TerritoryScript>().adjustHealth(team);
+        Destroy(this.gameObject);
     }
 
     //Keybinds for testing
