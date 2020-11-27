@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public Sprite mySprite;
     public Camera mainCamera;
     bool bselectionDraw = false;
+    public int team = 1;
+    public Color teamColor = new Color(1f, 1f, 1f, 1f);
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public int getTeam()
+    {
+        return team;
+    }
+
+    public Color getColor()
+    {
+        return teamColor;
+    }
+
+    public void setColor(Color newColor)
+    {
+        teamColor = newColor;
+    }
 
     private void Update()
     {
