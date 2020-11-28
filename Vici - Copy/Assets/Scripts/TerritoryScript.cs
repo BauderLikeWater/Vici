@@ -10,16 +10,18 @@ public class TerritoryScript : MonoBehaviour
     private float diameter = 0;
     public int player = 0;
     public int team = 0;
-    float genCounter = 0f;
-    public float genRate = 10f;
+    private float genCounter = 0f;
+    private float genRate = 10f;
     public GameObject Target = null;
     public GameObject RandomTarget;
+    private CircleCollider2D physCollider;
 
 
     // Start is called before the first frame update
     void Start()
     {
         updateDiameter(health);
+        physCollider = GetComponent<CircleCollider2D>();
     }
 
     private void Update()
@@ -73,9 +75,8 @@ public class TerritoryScript : MonoBehaviour
 
     private void updateDiameter(float h)
     {
-        diameter = h / 25;
-        if (diameter < 1.5f)
-            diameter = 1.5f;
+        diameter = 1.5f + (h / 28f);
+        physCollider.radius = diameter / 2f;
     }
 
     private Vector3 randomPosition()
@@ -113,13 +114,11 @@ public class TerritoryScript : MonoBehaviour
         UnitScript nUscr = newUnit.GetComponent<UnitScript>();
         nUscr.player = player;
         nUscr.enabled = true;
-        if(Target != null)
+        if (Target != null)
             nUscr.setTarget(Target);
         else
         {
-            
             nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
         }
-        //newUnit.transform.Translate(this.transform.position.x, this.transform.position.y, 0);
     }
 }

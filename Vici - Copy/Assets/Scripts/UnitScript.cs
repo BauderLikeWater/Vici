@@ -10,13 +10,16 @@ public class UnitScript : MonoBehaviour
 
     public float Health  = 2f;  // int that describes amount of time a unit can be "attacked" before "dying"
     public float Speed = 1f;   // Float that controls speed of the unit per frame
-    //float ActDist = .1f;  // Float (or int if necessary) that determines the radius a unit can act on for attacking and other actions
+    public float actDist = 0.8f;  // Float (or int if necessary) that determines the radius a unit can act on for attacking and other actions
     public int player = 0;
     public int team = 0; //unit team, team 0 is neutral team
     public Color teamColor;
     private GameObject teamManager;
     public GameObject Target;    // Target for attacking
     public GameObject PrevTarget; //Saved target if unit approaches nearby enemy unit first
+    private Collider2D[] nearestObject = new Collider2D[1];
+
+    CircleCollider2D aoe = new CircleCollider2D();
     string State = "Idle";
 
 
@@ -27,6 +30,8 @@ public class UnitScript : MonoBehaviour
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
         setTeam(tInfo.getPlayerTeam(player));
         setColor(tInfo.getPlayerColor(player));
+
+        aoe = GetComponent<CircleCollider2D>();
     }
 
     //Keybinds for testing
@@ -48,6 +53,17 @@ public class UnitScript : MonoBehaviour
     {
         if (Target != null)
             updatePos();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.GetComponent<UnitScript>() != null)
+            if(collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
+            {
+                PrevTarget = Target;
+                Target = collision.gameObject;
+            }
+
     }
 
     //sets a new target, and an appropriate state for the target
@@ -89,22 +105,34 @@ public class UnitScript : MonoBehaviour
         //One line to actually move
         transform.Translate(Vector3.up * Speed * Time.fixedDeltaTime, Space.Self);
 
-
+        //Collider
+        //CheckForEnemies();
     }
 
-    private void CheckForTarget()
+    /*
+    private void CheckForEnemies()
     {
-
+        
+        //Physics2D.OverlapCircleNonAlloc(transform.position, actDist, nearestObject);
     }
-
+    */
 
     //WIP attack function
     private void Action()
     {
         if (Target.GetComponent<UnitScript>() != null)
         {
-            Destroy(Target);
-            Target = null;
+            Attack(Target);
+            if(PrevTarget != null)
+            {
+                Target = PrevTarget;
+                PrevTarget = null;
+            }
+            else
+            {
+                Target = null;
+            }
+                
         }
         else if (Target.GetComponent<TerritoryScript>() != null)
         {
@@ -113,7 +141,7 @@ public class UnitScript : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void Attack(GameObject currTarget)
     {
 
     }

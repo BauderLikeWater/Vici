@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3586736334733061969}
   - component: {fileID: 3586736334733061974}
   - component: {fileID: 3586736334733061968}
+  - component: {fileID: 1044275758231035897}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -46,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 2
   Speed: 1
-  rotationSpeed: 180
+  player: 0
   team: 0
+  teamColor: {r: 0, g: 0, b: 0, a: 0}
   Target: {fileID: 0}
   PrevTarget: {fileID: 0}
 --- !u!212 &3586736334733061968
@@ -100,3 +102,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1044275758231035897
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3586736334733061975}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.1}
+  serializedVersion: 2
+  m_Radius: 1
