@@ -100,7 +100,7 @@ MonoBehaviour:
   healthCap: 100
   player: 0
   team: 0
-  genRate: 10
+  teamColor: {r: 0, g: 0, b: 0, a: 0}
   Target: {fileID: 0}
   RandomTarget: {fileID: 2755307334144635002, guid: c96e038df230242c4b3f5dcfbc3173c0,
     type: 3}
@@ -119,4 +119,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.0001
+  m_Radius: 0.5

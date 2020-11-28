@@ -27,9 +27,10 @@ public class UnitScript : MonoBehaviour
     {
         teamManager = GameObject.Find("TeamManager");
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
+
         setTeam(tInfo.getPlayerTeam(player));
         setColor(tInfo.getPlayerColor(player));
-
+        print("help");
         aoe = GetComponent<CircleCollider2D>();
     }
 
@@ -59,8 +60,9 @@ public class UnitScript : MonoBehaviour
         {
             Action();
         }
-        else if (collision.gameObject.CompareTag("Invisible Target"))
+        else if (collision.gameObject.CompareTag("Finish"))
         {
+            print("wtf");
             Destroy(Target);
             Target = null;
         }

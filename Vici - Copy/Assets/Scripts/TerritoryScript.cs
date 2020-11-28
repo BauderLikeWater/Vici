@@ -85,7 +85,10 @@ public class TerritoryScript : MonoBehaviour
     private void updateDiameter(float h)
     {
         diameter = 1.5f + (h / 28f);
-        physCollider.radius = diameter / 2f;
+
+        transform.localScale = new Vector3(diameter, diameter, 0);
+
+        //physCollider.radius = diameter / 2f;
     }
 
     private Vector3 randomPosition()
@@ -106,7 +109,7 @@ public class TerritoryScript : MonoBehaviour
         else if (y < this.transform.position.y)
             y -= (diameter / 2f);
 
-        print("" + x + ", " + y);
+        //print("" + x + ", " + y);
 
         return new Vector3(x, y, 0f);
     }
