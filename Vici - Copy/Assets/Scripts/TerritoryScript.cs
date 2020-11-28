@@ -91,7 +91,23 @@ public class TerritoryScript : MonoBehaviour
 
     private Vector3 randomPosition()
     {
+        float x = Random.insideUnitCircle.x;
+        //x = (diameter / 2f) * x + this.transform.position.x;
 
+        if (x >= 0)
+            x = (diameter / 2f) * x + this.transform.position.x + (diameter / 2f);
+        else if (x < 0)
+            x = (diameter / 2f) * x + this.transform.position.x - (diameter / 2f);
+
+        float y = Random.insideUnitCircle.y;
+        //y = (diameter / 2f) * y + this.transform.position.y;
+
+        if (y >= 0)
+            y = (diameter / 2f) * y + this.transform.position.y + (diameter / 2f);
+        else if (y < 0)
+            y = (diameter / 2f) * y + this.transform.position.y - (diameter / 2f);
+
+        /*
         float x = Random.insideUnitCircle.x;
         x =(diameter / 2f) * x + this.transform.position.x;
 
@@ -107,6 +123,7 @@ public class TerritoryScript : MonoBehaviour
             y += diameter;
         else if (y < this.transform.position.y)
             y -= diameter;
+        */
 
         return new Vector3(x, y, 0f);
     }

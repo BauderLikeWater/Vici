@@ -43,7 +43,6 @@ public class UnitScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        print("yoooooooo");
         if (collision.gameObject.GetComponent<UnitScript>() != null)
         {
             if (collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
