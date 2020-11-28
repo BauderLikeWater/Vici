@@ -5,11 +5,13 @@ using UnityEngine;
 public class TerritoryScript : MonoBehaviour
 {
     public GameObject Unit;
+    private GameObject teamManager;
     public float health = 10;
     public float healthCap = 100;
     private float diameter = 0;
     public int player = 0;
     public int team = 0;
+    public Color teamColor;
     private float genCounter = 0f;
     private float genRate = 10f;
     public GameObject Target = null;
@@ -20,8 +22,15 @@ public class TerritoryScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        teamManager = GameObject.Find("TeamManager");
+        TeamScript tInfo = teamManager.GetComponent<TeamScript>();
+        setTeam(tInfo.getPlayerTeam(player));
+        setColor(tInfo.getPlayerColor(player));
+
+        physCollider = this.GetComponent<CircleCollider2D>();
+
         updateDiameter(health);
-        physCollider = GetComponent<CircleCollider2D>();
+        
     }
 
     private void Update()
@@ -42,28 +51,28 @@ public class TerritoryScript : MonoBehaviour
         genCounter += Time.fixedDeltaTime;
     }
 
-    public void adjustHealth(int unitTeam)
+    public void adjustHealth(int unitTeam, int unitPlayer)
     {
-
-        //if health is Zero it makes the initial health of the captured health 10 and sets the team
-        if (health == 0)
-        {
-            health += 9;
-            team = unitTeam;
-        }
-        else if (unitTeam == team)
+        if(unitTeam == team)
         {
             health++;
         }
-        else
+        else if(unitTeam != team)
         {
-
             health--;
-            //if it was a negative change, and health is now 0
-            //the territory is now nuetral
-            if (health == 0)
-                team = 0;
         }
+
+        if(health <= 0 && team != 0)
+        {
+            convert(0);
+            health = 20;
+        }
+        else if(health <= 0 && team == 0)
+        {
+            convert(unitPlayer);
+            health = 15;
+        }
+
 
         updateDiameter(health);
 
@@ -102,9 +111,12 @@ public class TerritoryScript : MonoBehaviour
         return new Vector3(x, y, 0f);
     }
 
-    private void convert(int player)
+    private void convert(int unitPlayer)
     {
-
+        TeamScript tInfo = teamManager.GetComponent<TeamScript>();
+        setTeam(tInfo.getPlayerTeam(unitPlayer));
+        setPlayer(unitPlayer);
+        setColor(tInfo.getPlayerColor(unitPlayer));
     }
     
     private void generateUnit()
@@ -120,5 +132,52 @@ public class TerritoryScript : MonoBehaviour
         {
             nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
         }
+    }
+
+    public void setTarget(GameObject t)
+    {
+        Target = t;
+    }
+
+    //returns current target
+    public GameObject getTarget()
+    {
+        return Target;
+    }
+
+    //sets color
+    public void setColor(Color c)
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        teamColor = c;
+        sprite.color = teamColor;
+    }
+
+    //sets color
+    public Color getColor()
+    {
+        return teamColor;
+    }
+
+    //sets team, neutral is considered team 0
+    public void setTeam(int t)
+    {
+        team = t;
+    }
+
+    //returns team
+    public int getTeam()
+    {
+        return team;
+    }
+
+    public void setPlayer(int unitPlayer)
+    {
+        player = unitPlayer;
+    }
+
+    public int getPlayer()
+    {
+        return player;
     }
 }

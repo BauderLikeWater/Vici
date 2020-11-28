@@ -20,7 +20,6 @@ public class UnitScript : MonoBehaviour
     private Collider2D[] nearestObject = new Collider2D[1];
 
     CircleCollider2D aoe = new CircleCollider2D();
-    string State = "Idle";
 
 
     // Start is called before the first frame update
@@ -34,20 +33,6 @@ public class UnitScript : MonoBehaviour
         aoe = GetComponent<CircleCollider2D>();
     }
 
-    //Keybinds for testing
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-            if (State == "Attacking")
-                State = "Sacrificing";
-            else if (State == "Sacrificing")
-                State = "Moving";
-            else if (State == "Moving")
-                State = "Idle";
-            else
-                State = "Attacking";
-    }
-
     //updates independently of framerate
     private void FixedUpdate()
     {
@@ -57,47 +42,29 @@ public class UnitScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<UnitScript>() != null)
+        if (collision.gameObject.GetComponent<UnitScript>() != null)
         {
-            if(collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
+            if (collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
             {
                 Action();
             }
-            else if(collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
+            else if (collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
             {
                 PrevTarget = Target;
                 Target = collision.gameObject;
                 Action();
             }
         }
-            
-
-    }
-
-    //sets a new target, and an appropriate state for the target
-    //I intend for this to be called when the player clicks on an object while 
-    //this unit is selected
-
-    /*
-    public void setNewTargetState(GameObject newObject, string newState)
-    {
-        Target = newObject;
-
-        if (Target.name.Contains("Territory") )
+        else if (collision.gameObject.GetComponent<TerritoryScript>() != null && collision.gameObject == Target)
         {
-            if (Target.GetComponent<TerritoryScript>().team == this.team && Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
-                State = "Sacrificing";
-            else
-                State = "Attacking";
+            Action();
         }
-        else if (Target.name.Contains("Unit"))
+        else if (collision.gameObject.CompareTag("Invisible Target"))
         {
-            if (Target.GetComponent<UnitScript>().team == this.team)
-                State = "Attacking";
+            Destroy(Target);
+            Target = null;
         }
-        //friendly units and other objects will be ignored, so no if case for them
     }
-    */
 
     private void updatePos()
     {
@@ -142,22 +109,15 @@ public class UnitScript : MonoBehaviour
         }
         else if (Target.GetComponent<TerritoryScript>() != null)
         {
-            Target.GetComponent<TerritoryScript>().adjustHealth(team);
+            Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
             Destroy(this.gameObject);
         }
     }
 
     private void Attack(GameObject currTarget)
     {
-
-    }
-
-    //WIP sacrifice function
-    private void Sacrifice()
-    {
-        //needs to call the territory's add health function then destroy self
-        Target.GetComponent<TerritoryScript>().adjustHealth(team);
-        Destroy(this.gameObject);
+        Destroy(currTarget);
+        Target = null;
     }
 
     //sets current target
