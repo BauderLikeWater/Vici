@@ -75,11 +75,6 @@ public class TerritoryScript : MonoBehaviour
 
 
         updateDiameter(health);
-
-        //new generation rate algorithm
-        //to increase genration rate, reduce the denominator
-        //a denominator of 132 will produce a unit at max health every 1.5 seconds
-        genRate = (float)health/132f;
     }
 
     private void updateDiameter(float h)
@@ -88,7 +83,10 @@ public class TerritoryScript : MonoBehaviour
 
         transform.localScale = new Vector3(diameter, diameter, 0);
 
-        //physCollider.radius = diameter / 2f;
+        //new generation rate algorithm
+        //to increase genration rate, reduce the denominator
+        //a denominator of 132 will produce a unit at max health every 1.5 seconds
+        genRate = (float)health / 66f;
     }
 
     private Vector3 randomPosition()
