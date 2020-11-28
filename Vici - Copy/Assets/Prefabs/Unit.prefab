@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 2
   Speed: 1
+  actDist: 0.8
   player: 0
   team: 0
   teamColor: {r: 0, g: 0, b: 0, a: 0}
@@ -117,4 +118,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.1}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5

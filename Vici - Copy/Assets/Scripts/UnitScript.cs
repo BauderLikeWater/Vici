@@ -55,14 +55,22 @@ public class UnitScript : MonoBehaviour
             updatePos();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.GetComponent<UnitScript>() != null)
-            if(collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
+        {
+            if(collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
+            {
+                Action();
+            }
+            else if(collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
             {
                 PrevTarget = Target;
                 Target = collision.gameObject;
+                Action();
             }
+        }
+            
 
     }
 
@@ -117,7 +125,6 @@ public class UnitScript : MonoBehaviour
     }
     */
 
-    //WIP attack function
     private void Action()
     {
         if (Target.GetComponent<UnitScript>() != null)
@@ -132,7 +139,6 @@ public class UnitScript : MonoBehaviour
             {
                 Target = null;
             }
-                
         }
         else if (Target.GetComponent<TerritoryScript>() != null)
         {
