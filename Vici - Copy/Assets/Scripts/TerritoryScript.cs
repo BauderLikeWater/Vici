@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class TerritoryScript : MonoBehaviour
 {
-    public int health = 10;
-    public int healthCap = 100;
+    public GameObject Unit;
+    public float health = 10;
+    public float healthCap = 100;
+    private float diameter = 0;
+    public int player = 0;
     public int team = 0;
     float genCounter = 0f;
     public float genRate = 10f;
-    public GameObject Target;
+    public GameObject Target = null;
+    public GameObject RandomTarget;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        updateDiameter(health);
     }
 
     private void Update()
@@ -24,10 +28,13 @@ public class TerritoryScript : MonoBehaviour
             generateUnit();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
 
-        if (genCounter >= genRate) { 
-            generateUnit();
+        if (genCounter >= genRate)
+        {
+            if(team != 0)
+                generateUnit();
             genCounter = 0f;
         }
         genCounter += Time.fixedDeltaTime;
@@ -56,20 +63,63 @@ public class TerritoryScript : MonoBehaviour
                 team = 0;
         }
 
+        updateDiameter(health);
+
         //new generation rate algorithm
         //to increase genration rate, reduce the denominator
         //a denominator of 132 will produce a unit at max health every 1.5 seconds
         genRate = (float)health/132f;
     }
 
-    //do units generate in or out of the territory
+    private void updateDiameter(float h)
+    {
+        diameter = h / 25;
+        if (diameter < 1.5f)
+            diameter = 1.5f;
+    }
+
+    private Vector3 randomPosition()
+    {
+        float x = Random.insideUnitCircle.x;
+        x += this.transform.position.x;
+
+        if (x > this.transform.position.x)
+            x += (diameter / 2f);
+        else if (x < this.transform.position.x)
+            x -= (diameter / 2f);
+
+        float y = Random.insideUnitCircle.y;
+        y += this.transform.position.y;
+
+        if (y > this.transform.position.y)
+            y += (diameter / 2f);
+        else if (y < this.transform.position.y)
+            y -= (diameter / 2f);
+
+        print("" + x + ", " + y);
+
+        return new Vector3(x, y, 0f);
+    }
+
+    private void convert(int player)
+    {
+
+    }
     
-    void generateUnit()
+    private void generateUnit()
     {
         //print("Generate");
-        GameObject newUnit = Instantiate(Resources.Load("Unit")) as GameObject;
-        newUnit.GetComponent<UnitScript>().setTeam(team);
-        newUnit.GetComponent<UnitScript>().setTarget(Target);
-        newUnit.transform.Translate(this.transform.position.x, this.transform.position.y, 0);
+        GameObject newUnit = Instantiate(Unit, transform.position, Quaternion.Euler(0f, 0f, 180f));
+        UnitScript nUscr = newUnit.GetComponent<UnitScript>();
+        nUscr.player = player;
+        nUscr.enabled = true;
+        if(Target != null)
+            nUscr.setTarget(Target);
+        else
+        {
+            
+            nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
+        }
+        //newUnit.transform.Translate(this.transform.position.x, this.transform.position.y, 0);
     }
 }

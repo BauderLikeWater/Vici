@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\TeamScript.cs" />
     <Compile Include="Assets\Scripts\TerritoryScript.cs" />
     <Compile Include="Assets\Scripts\UnitScript.cs" />
     <Reference Include="UnityEngine">

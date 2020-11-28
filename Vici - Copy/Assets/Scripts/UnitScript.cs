@@ -10,31 +10,44 @@ public class UnitScript : MonoBehaviour
 
     public float Health  = 2f;  // int that describes amount of time a unit can be "attacked" before "dying"
     public float Speed = 1f;   // Float that controls speed of the unit per frame
-    public float rotationSpeed = 180f;
     //float ActDist = .1f;  // Float (or int if necessary) that determines the radius a unit can act on for attacking and other actions
+    public int player = 0;
     public int team = 0; //unit team, team 0 is neutral team
-    Vector3 Destin;   // Destination for travel
+    public Color teamColor;
+    private GameObject teamManager;
     public GameObject Target;    // Target for attacking
     public GameObject PrevTarget; //Saved target if unit approaches nearby enemy unit first
     string State = "Idle";
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        team = GameObject.Find("Player Controller").GetComponent<PlayerController>().getTeam();
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
-        sprite.color = GameObject.Find("Player Controller").GetComponent<PlayerController>().getColor();
+        teamManager = GameObject.Find("TeamManager");
+        TeamScript tInfo = teamManager.GetComponent<TeamScript>();
+        setTeam(tInfo.getPlayerTeam(player));
+        setColor(tInfo.getPlayerColor(player));
     }
 
-    public void setTarget(GameObject t)
+    //Keybinds for testing
+    private void Update()
     {
-        Target = t;
+        if (Input.GetKeyDown(KeyCode.U))
+            if (State == "Attacking")
+                State = "Sacrificing";
+            else if (State == "Sacrificing")
+                State = "Moving";
+            else if (State == "Moving")
+                State = "Idle";
+            else
+                State = "Attacking";
     }
 
-    public GameObject getTarget()
+    //updates independently of framerate
+    private void FixedUpdate()
     {
-        return Target;
+        if (Target != null)
+            updatePos();
     }
 
     //sets a new target, and an appropriate state for the target
@@ -62,22 +75,11 @@ public class UnitScript : MonoBehaviour
     }
     */
 
-    //sets team. neutral is considered team 0
-    public void setTeam(int t)
-    {
-        team = t;
-    }
-
-    public int getTeam()
-    {
-        return team;
-    }
-    
     private void updatePos()
     {
         //Magical rotation code that I spent 6 hours on
-        float rotationSpeed = 2.5f;
         float offset = -90f;
+        float rotationSpeed = 2.5f;
         Vector3 direction = Target.transform.position - transform.position;
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -86,99 +88,34 @@ public class UnitScript : MonoBehaviour
 
         //One line to actually move
         transform.Translate(Vector3.up * Speed * Time.fixedDeltaTime, Space.Self);
+
+
     }
 
     private void CheckForTarget()
     {
 
     }
-    
 
-    /*
-     * Old updatePos()
-    private void updatePos() {
-
-        //saves the math for testing positions of the x and y for multiple uses
-        float differenceX = transform.position.x - Target.transform.position.x;
-        bool testX = (Mathf.Abs(differenceX) >= ActDist);
-
-        float differenceY = transform.position.y - Target.transform.position.y;
-        bool testY = (Mathf.Abs(differenceY) >= ActDist);
-
-        bool clearX = false;
-        bool clearY = false;
-
-
-        //Looks at target, it currently borks the sprite
-        //transform.LookAt(Target.transform.localPosition);
-
-        //tests x
-        if (testX && differenceX > 0)
-        {
-
-            transform.position = new Vector3(
-                transform.position.x - Speed * Time.fixedDeltaTime,
-                transform.position.y,
-                transform.position.z
-                );
-        }
-        else if (testX && differenceX < 0)
-        {
-            transform.position = new Vector3(
-                transform.position.x + Speed * Time.fixedDeltaTime,
-                transform.position.y,
-                transform.position.z
-                );
-        }
-        else
-            clearX = true;
-
-        //tests y
-        if (testY && differenceY > 0)
-        {
-            transform.position = new Vector3(
-                transform.position.x,
-                transform.position.y - Speed  * Time.fixedDeltaTime,
-                transform.position.z
-                );
-        }
-        else if (testY && differenceY < 0)
-        {
-            transform.position = new Vector3(
-                transform.position.x,
-                transform.position.y + Speed * Time.fixedDeltaTime,
-                transform.position.z
-                );
-        }
-        else
-            clearY = true;
-
-
-        //calls the update of the units current action if inside act dist of Target
-        if (clearX && clearY)
-        {
-            if (State == "Attacking")
-                Attack();
-            else if (State == "Sacrificing")
-                Sacrifice();
-            //move and idle don't need/have update functions
-        }
-    }
-    */
 
     //WIP attack function
-    private void Attack()
+    private void Action()
     {
         if (Target.GetComponent<UnitScript>() != null)
         {
             Destroy(Target);
             Target = null;
         }
-        else if(Target.GetComponent<TerritoryScript>() != null)
+        else if (Target.GetComponent<TerritoryScript>() != null)
         {
             Target.GetComponent<TerritoryScript>().adjustHealth(team);
             Destroy(this.gameObject);
         }
+    }
+
+    private void Attack()
+    {
+
     }
 
     //WIP sacrifice function
@@ -189,24 +126,41 @@ public class UnitScript : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    //Keybinds for testing
-    private void Update()
+    //sets current target
+    public void setTarget(GameObject t)
     {
-        if (Input.GetKeyDown(KeyCode.U))
-            if (State == "Attacking")
-                State = "Sacrificing";
-            else if (State == "Sacrificing")
-                State = "Moving";
-            else if (State == "Moving")
-                State = "Idle";
-            else
-                State = "Attacking";
+        Target = t;
     }
 
-    //updates independently of framerate
-    private void FixedUpdate()
+    //returns current target
+    public GameObject getTarget()
     {
-        if (Target != null)
-            updatePos();
+        return Target;
+    }
+
+    //sets color
+    public void setColor(Color c)
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        teamColor = c;
+        sprite.color = teamColor;
+    }
+
+    //sets color
+    public Color getColor()
+    {
+        return teamColor;
+    }
+
+    //sets team, neutral is considered team 0
+    public void setTeam(int t)
+    {
+        team = t;
+    }
+
+    //returns team
+    public int getTeam()
+    {
+        return team;
     }
 }
