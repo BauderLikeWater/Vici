@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Unit: {fileID: 3586736334733061975, guid: 8fdda8dab25de4120bf79533704fee13, type: 3}
-  health: 0
+  health: 10
   healthCap: 100
   player: 0
   team: 0
