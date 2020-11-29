@@ -3,7 +3,7 @@
     <Files>
       <File FileName="Assets/Scripts/PlayerController.cs" Line="11" Column="33" />
       <File FileName="Assets/Scripts/UnitScript.cs" Line="106" Column="41" />
-      <File FileName="Assets/Scripts/TerritoryScript.cs" Line="85" Column="1" />
+      <File FileName="Assets/Scripts/TerritoryScript.cs" />
       <File FileName="Assets/Scripts/TeamScript.cs" />
     </Files>
     <Pads>
@@ -12,7 +12,7 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="UnitScript.cs" selected="True" />
+                <Node name="PlayerController.cs" selected="True" />
               </Node>
             </Node>
           </Node>

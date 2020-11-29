@@ -59,11 +59,17 @@ public class UnitScript : MonoBehaviour
         {
             Action();
         }
-        else if (collision.gameObject.CompareTag("Invisible Target"))
+        else if (collision.gameObject.CompareTag("Invisible Target") && collision.gameObject == Target)
         {
             Destroy(Target);
             Target = null;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (Target != null && Target.CompareTag("Invisible Target"))
+            Destroy(Target);
     }
 
     private void updatePos()
@@ -103,7 +109,9 @@ public class UnitScript : MonoBehaviour
         {
             if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
             {
-                ActionTerritory(Target);
+                //ActionTerritory(Target);
+                Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
+                Destroy(this.gameObject);
             }
             else
                 Target = null;
@@ -135,8 +143,7 @@ public class UnitScript : MonoBehaviour
             tScript.health = 15;
         }
 
-        //Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
-        Destroy(this.gameObject);
+        
     }
 
     //sets current target

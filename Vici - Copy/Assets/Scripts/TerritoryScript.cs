@@ -35,10 +35,10 @@ public class TerritoryScript : MonoBehaviour
 
     private void Update()
     {
-        updateDiameter(health);
-
+        /*
         if (Input.GetKeyDown(KeyCode.A))
             generateUnit();
+        */
     }
 
     private void FixedUpdate()
@@ -51,12 +51,8 @@ public class TerritoryScript : MonoBehaviour
         }
 
         genCounter += Time.fixedDeltaTime;
-
-        if (health!=100)
-            print(health);
     }
 
-    /*
     //move this to be handled by unit
     public void adjustHealth(int unitTeam, int unitPlayer)
     {
@@ -80,8 +76,8 @@ public class TerritoryScript : MonoBehaviour
             health = 15;
         }
 
+        updateDiameter(health);
     }
-    */
 
     private void updateDiameter(float h)
     {
@@ -92,9 +88,10 @@ public class TerritoryScript : MonoBehaviour
         //new generation rate algorithm
         //to increase genration rate, reduce the denominator
         //a denominator of 132 will produce a unit at max health every 1.5 seconds
-        //genRate = 120f / (float)health;
 
-        genRate = .5f;
+        genRate = 120f / (float)health;
+
+        //genRate = .5f;
     }
 
     private Vector3 randomPosition()
