@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2027824044897189857}
   - component: {fileID: 2365881388248081405}
   - component: {fileID: 7786256296097646024}
-  - component: {fileID: -6241333316780444941}
+  - component: {fileID: -2263064074569368855}
   m_Layer: 0
   m_Name: Territory
   m_TagString: Selectable
@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5b0bc317862dc5642808511fe7d4ce3c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -143,17 +143,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-6241333316780444941
+--- !u!114 &-2263064074569368855
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027824044897189858}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b425f888c9846fc8c445ce5b597138, type: 3}
+  m_Script: {fileID: 11500000, guid: 411883fb634524afc82746869729f6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selected: 0
-  selectColor: {r: 0, g: 0, b: 1, a: 1}
+  color: {r: 0.30588236, g: 1, b: 1, a: 1}
+  outlineSize: 16

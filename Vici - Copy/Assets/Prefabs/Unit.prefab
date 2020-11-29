@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3586736334733061968}
   - component: {fileID: 1044275758231035897}
   - component: {fileID: 8082620084870053315}
+  - component: {fileID: -4411688670562236660}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Selectable
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5b0bc317862dc5642808511fe7d4ce3c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,3 +142,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-4411688670562236660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3586736334733061975}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411883fb634524afc82746869729f6f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.30588236, g: 1, b: 1, a: 1}
+  outlineSize: 16

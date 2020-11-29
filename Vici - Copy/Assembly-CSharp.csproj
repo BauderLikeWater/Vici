@@ -66,9 +66,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SelectionHandler.cs" />
+    <Compile Include="Assets\Scripts\SpriteOutline.cs" />
     <Compile Include="Assets\Scripts\TeamScript.cs" />
     <Compile Include="Assets\Scripts\TerritoryScript.cs" />
     <Compile Include="Assets\Scripts\UnitScript.cs" />
+    <None Include="Assets\Shaders\Sprites-Outline.shader" />
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Hub/Editor/2019.4.11f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

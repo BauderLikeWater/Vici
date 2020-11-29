@@ -344,6 +344,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -2263064074569368855, guid: a55662b53dabf4aa5bcbfcb6a7f13ad5,
+        type: 3}
+      propertyPath: outlineSize
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2027824044897189856, guid: a55662b53dabf4aa5bcbfcb6a7f13ad5,
         type: 3}
       propertyPath: m_Sprite
