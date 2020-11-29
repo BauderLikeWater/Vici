@@ -27,8 +27,7 @@ public class UnitScript : MonoBehaviour
     {
         teamManager = GameObject.Find("TeamManager");
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
-
-        //setTeam(tInfo.getPlayerTeam(player));
+        setTeam(tInfo.getPlayerTeam(player));
         setColor(tInfo.getPlayerColor(player));
 
         aoe = GetComponent<CircleCollider2D>();
