@@ -91,17 +91,31 @@ public class TerritoryScript : MonoBehaviour
 
     private Vector3 randomPosition()
     {
-        float x = Random.insideUnitCircle.x;
-        //x = (diameter / 2f) * x + this.transform.position.x;
+        float theta = 360 * Random.Range(0.0f, 1.0f);
+        float innerRadius = diameter / 2f;
+        float outerRadus = innerRadius + 1f;
 
+        float dist = Mathf.Sqrt(Random.Range(0.0f, 1.0f) * (Mathf.Pow(innerRadius, 2.0f) - Mathf.Pow(outerRadus, 2f)) + Mathf.Pow(outerRadus, 2f));
+
+        float x = (dist * Mathf.Cos(theta)) + this.transform.position.x;
+        float y = (dist * Mathf.Sin(theta)) + this.transform.position.y;
+
+
+        /*
+        float x = Random.insideUnitCircle.x;
+        x = x + this.transform.position.x + (x * diameter);
+
+        /*
         if (x >= 0)
-            x = (diameter / 2f) * x + this.transform.position.x + (diameter / 2f);
+            x = 1.1f * x + this.transform.position.x + (x * diameter);
         else if (x < 0)
             x = (diameter / 2f) * x + this.transform.position.x - (diameter / 2f);
-
+        */
+        /*
         float y = Random.insideUnitCircle.y;
-        //y = (diameter / 2f) * y + this.transform.position.y;
-
+        y = y + this.transform.position.y + (y * diameter);
+        */
+        /*
         if (y >= 0)
             y = (diameter / 2f) * y + this.transform.position.y + (diameter / 2f);
         else if (y < 0)
@@ -142,7 +156,9 @@ public class TerritoryScript : MonoBehaviour
         GameObject newUnit = Instantiate(Unit, transform.position, Quaternion.Euler(0f, 0f, 180f));
         UnitScript nUscr = newUnit.GetComponent<UnitScript>();
         nUscr.player = player;
+        nUscr.team = team;
         nUscr.enabled = true;
+
         if (Target != null)
             nUscr.setTarget(Target);
         else
