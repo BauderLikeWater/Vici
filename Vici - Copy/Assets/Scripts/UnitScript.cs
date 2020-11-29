@@ -101,8 +101,13 @@ public class UnitScript : MonoBehaviour
         }
         else if (Target.GetComponent<TerritoryScript>() != null)
         {
-            Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
-            Destroy(this.gameObject);
+            if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
+            {
+                Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
+                Destroy(this.gameObject);
+            }
+            else
+                Target = null;
         }
     }
 

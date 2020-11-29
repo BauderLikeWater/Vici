@@ -52,7 +52,7 @@ public class TerritoryScript : MonoBehaviour
 
     public void adjustHealth(int unitTeam, int unitPlayer)
     {
-        if(unitTeam == team)
+        if(unitTeam == team && health <= healthCap)
         {
             health++;
         }
@@ -84,7 +84,7 @@ public class TerritoryScript : MonoBehaviour
         //new generation rate algorithm
         //to increase genration rate, reduce the denominator
         //a denominator of 132 will produce a unit at max health every 1.5 seconds
-        genRate = (float)health / 66f;
+        genRate = 120f / (float)health;
     }
 
     private Vector3 randomPosition()

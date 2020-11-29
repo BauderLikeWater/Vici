@@ -2,8 +2,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TerritoryScript.cs">
     <Files>
       <File FileName="Assets/Scripts/PlayerController.cs" Line="19" Column="9" />
-      <File FileName="Assets/Scripts/UnitScript.cs" Line="115" Column="10" />
-      <File FileName="Assets/Scripts/TerritoryScript.cs" Line="105" Column="19" />
+      <File FileName="Assets/Scripts/UnitScript.cs" Line="110" Column="25" />
+      <File FileName="Assets/Scripts/TerritoryScript.cs" Line="35" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
