@@ -16,6 +16,8 @@ public class TerritoryScript : MonoBehaviour
     private float genRate = 10f;
     public GameObject Target = null;
     public GameObject RandomTarget;
+
+    SpriteRenderer sprite;
     //private CircleCollider2D physCollider;
 
 
@@ -25,6 +27,8 @@ public class TerritoryScript : MonoBehaviour
         teamManager = GameObject.Find("TeamManager");
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
         setTeam(tInfo.getPlayerTeam(player));
+
+        sprite = GetComponent<SpriteRenderer>();
         setColor(tInfo.getPlayerColor(player));
 
         //physCollider = this.GetComponent<CircleCollider2D>();
@@ -84,6 +88,9 @@ public class TerritoryScript : MonoBehaviour
         diameter = 1.5f + (h / 28f);
 
         transform.localScale = new Vector3(diameter, diameter, 0);
+
+        //unused sprite scaler
+        //sprite.size = new Vector2(diameter, diameter);
 
         //new generation rate algorithm
         //to increase genration rate, reduce the denominator
@@ -147,7 +154,6 @@ public class TerritoryScript : MonoBehaviour
     //sets color
     public void setColor(Color c)
     {
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         teamColor = c;
         sprite.color = teamColor;
     }

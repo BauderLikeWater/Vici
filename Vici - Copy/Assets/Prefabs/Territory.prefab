@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2027824044897189857}
   - component: {fileID: 2365881388248081405}
   - component: {fileID: 7786256296097646024}
+  - component: {fileID: -6241333316780444941}
   m_Layer: 0
   m_Name: Territory
   m_TagString: Selectable
@@ -73,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: -899363731
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cf9a9bdeed5574ecfaf8ef4966647915, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0350b0835c5fb459ca2c2c404e578f35, type: 3}
+  m_Color: {r: 0.6191893, g: 1, b: 0.5801887, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_DrawMode: 1
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -101,7 +102,7 @@ MonoBehaviour:
   healthCap: 100
   player: 0
   team: 0
-  teamColor: {r: 0, g: 0, b: 0, a: 0}
+  teamColor: {r: 0.61960787, g: 1, b: 0.5803922, a: 0}
   Target: {fileID: 0}
   RandomTarget: {fileID: 2755307334144635002, guid: c96e038df230242c4b3f5dcfbc3173c0,
     type: 3}
@@ -142,3 +143,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-6241333316780444941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027824044897189858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b425f888c9846fc8c445ce5b597138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: 0
+  selectColor: {r: 0, g: 0, b: 1, a: 1}
