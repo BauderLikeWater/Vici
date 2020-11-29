@@ -84,14 +84,6 @@ public class UnitScript : MonoBehaviour
         //CheckForEnemies();
     }
 
-    /*
-    private void CheckForEnemies()
-    {
-        
-        //Physics2D.OverlapCircleNonAlloc(transform.position, actDist, nearestObject);
-    }
-    */
-
     private void Action()
     {
         if (Target.GetComponent<UnitScript>() != null)

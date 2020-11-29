@@ -41,7 +41,6 @@ public class TerritoryScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (genCounter >= genRate)
         {
             if(team != 0)
@@ -72,7 +71,6 @@ public class TerritoryScript : MonoBehaviour
             convert(unitPlayer);
             health = 15;
         }
-
 
         updateDiameter(health);
     }
