@@ -103,8 +103,7 @@ public class UnitScript : MonoBehaviour
         {
             if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
             {
-                Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
-                Destroy(this.gameObject);
+                ActionTerritory(Target);
             }
             else
                 Target = null;
@@ -115,6 +114,29 @@ public class UnitScript : MonoBehaviour
     {
         Destroy(currTarget);
         Target = null;
+    }
+
+    private void ActionTerritory(GameObject currTarget)
+    {
+        TerritoryScript tScript = currTarget.GetComponent<TerritoryScript>();
+        if (tScript.team == team && tScript.health <= tScript.healthCap)
+            tScript.health++;
+        else if (tScript.team != team)
+            tScript.health--;
+
+        if(tScript.health <= 0 && tScript.team != 0)
+        {
+            tScript.convert(0);
+            tScript.health = 20;
+        }
+        else if(tScript.health <= 0 && tScript.team == 0)
+        {
+            tScript.convert(player);
+            tScript.health = 15;
+        }
+
+        //Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
+        Destroy(this.gameObject);
     }
 
     //sets current target

@@ -16,7 +16,7 @@ public class TerritoryScript : MonoBehaviour
     private float genRate = 10f;
     public GameObject Target = null;
     public GameObject RandomTarget;
-    private CircleCollider2D physCollider;
+    //private CircleCollider2D physCollider;
 
 
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class TerritoryScript : MonoBehaviour
         setTeam(tInfo.getPlayerTeam(player));
         setColor(tInfo.getPlayerColor(player));
 
-        physCollider = this.GetComponent<CircleCollider2D>();
+        //physCollider = this.GetComponent<CircleCollider2D>();
 
         updateDiameter(health);
         
@@ -35,6 +35,8 @@ public class TerritoryScript : MonoBehaviour
 
     private void Update()
     {
+        updateDiameter(health);
+
         if (Input.GetKeyDown(KeyCode.A))
             generateUnit();
     }
@@ -47,9 +49,15 @@ public class TerritoryScript : MonoBehaviour
                 generateUnit();
             genCounter = 0f;
         }
+
         genCounter += Time.fixedDeltaTime;
+
+        if (health!=100)
+            print(health);
     }
 
+    /*
+    //move this to be handled by unit
     public void adjustHealth(int unitTeam, int unitPlayer)
     {
         if(unitTeam == team && health <= healthCap)
@@ -72,8 +80,8 @@ public class TerritoryScript : MonoBehaviour
             health = 15;
         }
 
-        updateDiameter(health);
     }
+    */
 
     private void updateDiameter(float h)
     {
@@ -84,7 +92,9 @@ public class TerritoryScript : MonoBehaviour
         //new generation rate algorithm
         //to increase genration rate, reduce the denominator
         //a denominator of 132 will produce a unit at max health every 1.5 seconds
-        genRate = 120f / (float)health;
+        //genRate = 120f / (float)health;
+
+        genRate = .5f;
     }
 
     private Vector3 randomPosition()
@@ -101,7 +111,7 @@ public class TerritoryScript : MonoBehaviour
         return new Vector3(x, y, 0f);
     }
 
-    private void convert(int unitPlayer)
+    public void convert(int unitPlayer)
     {
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
         setTeam(tInfo.getPlayerTeam(unitPlayer));
