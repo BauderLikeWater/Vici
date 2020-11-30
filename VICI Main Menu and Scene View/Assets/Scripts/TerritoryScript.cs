@@ -133,11 +133,19 @@ public class TerritoryScript : MonoBehaviour
         nUscr.enabled = true;
 
         if (Target != null)
+            nUscr.PrevTarget = Target;
+
+        nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
+
+
+        /*
+        if (Target != null)
             nUscr.setTarget(Target);
         else
         {
             nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
         }
+        */
     }
 
     public void setTarget(GameObject t)

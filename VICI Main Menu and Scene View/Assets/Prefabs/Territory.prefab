@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2263064074569368855}
   m_Layer: 0
   m_Name: Territory
-  m_TagString: Selectable
+  m_TagString: Territory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

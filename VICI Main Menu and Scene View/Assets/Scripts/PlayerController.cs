@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public int player = 0;
     public int team = 1;
     public Color teamColor = new Color(1f, 1f, 1f, 1f);
+    public Texture selectBox;
+    public GUIStyle boxStyle;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             if (stuff.gameObject.GetComponent<UnitScript>() != null)
             {
-                //stuff.gameObject.GetComponent<UnitScript>().target;
+                stuff.gameObject.GetComponent<UnitScript>().Target = null;
             }
             else
             {
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
             GUI.Box(new Rect(beginMouseSelecRec.x, -(beginMouseSelecRec.y - Screen.height),
                 (endMouseSelecRec.x - beginMouseSelecRec.x),
                 -(endMouseSelecRec.y - beginMouseSelecRec.y)),
-                myTexture);
+                new GUIContent(selectBox), boxStyle);
     }
 
 
@@ -103,6 +105,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SelectionList.Add(stuff.gameObject);
                     foundUnit = true;
+
                 }
             }
 
@@ -132,7 +135,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         playerClick();
-        print(Input.GetMouseButtonDown(0));
+        //print(Input.GetMouseButtonDown(0));
         //print(Input.mousePosition);
         //print(Event.current.mousePosition);
     }

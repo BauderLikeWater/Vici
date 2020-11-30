@@ -779,17 +779,17 @@ PrefabInstance:
     - target: {fileID: 7431349193699544128, guid: b098a073305df46d39af0bf2e8a56c90,
         type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0
+      value: 0.9921569
       objectReference: {fileID: 0}
     - target: {fileID: 7431349193699544128, guid: b098a073305df46d39af0bf2e8a56c90,
         type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0
+      value: 0.7490196
       objectReference: {fileID: 0}
     - target: {fileID: 7431349193699544128, guid: b098a073305df46d39af0bf2e8a56c90,
         type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0
+      value: 0.023529414
       objectReference: {fileID: 0}
     - target: {fileID: 7431349193699544128, guid: b098a073305df46d39af0bf2e8a56c90,
         type: 3}

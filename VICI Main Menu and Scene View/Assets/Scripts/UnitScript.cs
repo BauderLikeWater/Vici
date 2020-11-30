@@ -63,6 +63,11 @@ public class UnitScript : MonoBehaviour
         {
             Destroy(Target);
             Target = null;
+            if (PrevTarget != null)
+            {
+                Target = PrevTarget;
+                PrevTarget = null;
+            }
         }
     }
 
