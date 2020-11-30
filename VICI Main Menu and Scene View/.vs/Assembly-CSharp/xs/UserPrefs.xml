@@ -1,19 +1,12 @@
 ﻿<Properties StartupConfiguration="{B9DE6A61-7218-540E-05F5-5CBBE1B917CD}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UnitScript.cs">
-    <Files>
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="19" Column="9" />
-      <File FileName="Assets/Scripts/UnitScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TerritoryScript.cs" Line="92" Column="31" />
-      <File FileName="Assets/Scripts/TeamScript.cs" />
-      <File FileName="Assets/Scripts/SpriteOutline.cs" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="UnitScript.cs" selected="True" />
+                <Node name="PlayerControllerOLD.cs" selected="True" />
               </Node>
             </Node>
           </Node>

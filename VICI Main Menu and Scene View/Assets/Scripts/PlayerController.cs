@@ -1,14 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector3 beginMouseSelec;
-    Vector3 endMouseSelec;
-    public Sprite mySprite;
+    Vector3 beginMouseSelec = new Vector3(0, 0, 0);
+    Vector3 beginMouseSelecRec = new Vector3(0, 0, 0);
+    Vector3 endMouseSelec = new Vector3(0, 0, 0);
+    Vector3 endMouseSelecRec = new Vector3(0, 0, 0);
+    public Texture myTexture;
     public Camera mainCamera;
     bool bselectionDraw = false;
+    //Collider2D SelectionCollider = new Collider2D();
+    List<GameObject> SelectionList = new List<GameObject>();
     public int player = 0;
     public int team = 1;
     public Color teamColor = new Color(1f, 1f, 1f, 1f);
@@ -16,76 +21,119 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //mainCamera = Camera.Find("Main Camera");
     }
-
-    /*
-    private void playerClick() {
-        if (Input.GetMouseButtonDown(0)){ 
-            beginMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition); ;
-            endMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        }
-
-        if (Input.GetMouseButton(0)) {
-            endMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            //Graphics.DrawTexture(new Rect(beginMouseSelec.x, beginMouseSelec.y, (beginMouseSelec.x- endMouseSelec.x), (beginMouseSelec.y - endMouseSelec.y)), myTexture);
-            
-            
-            print(endMouseSelec);
-        }
-
-        if (Input.GetMouseButtonUp(0)){
-            //Select all units between beginMouseSelec and endMouseSelec
-
-        }
-
-        drawSprite();
-    }
-    */
 
     private void playerClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift))
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+            beginMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            beginMouseSelecRec = Input.mousePosition;
+            endMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            endMouseSelecRec = Input.mousePosition;
+            bselectionDraw = true;
+        }
 
-            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-            if (hit.collider != null)
+        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift))
+        {
+            endMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            endMouseSelecRec = Input.mousePosition;
+
+
+        }
+
+        if ((Input.GetMouseButtonUp(0) && Input.GetKey(KeyCode.LeftShift)) || (Input.GetMouseButton(0) && Input.GetKeyUp(KeyCode.LeftShift)))
+        {
+            bselectionDraw = false;
+            if (SelectionList.Count < 1)
+                Selection();
+        }
+        else if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.LeftShift))
+        {
+
+            if (SelectionList.Count >= 1)
+                giveTarget();
+            else
+                Deselection();
+        }
+    }
+
+    private void giveTarget()
+    {
+        foreach (GameObject stuff in SelectionList)
+        {
+            if (stuff.gameObject.GetComponent<UnitScript>() != null)
             {
-                print(hit.collider.gameObject.name);
-                hit.collider.attachedRigidbody.AddForce(Vector2.up);
+                //stuff.gameObject.GetComponent<UnitScript>().target;
+            }
+            else
+            {
+
             }
         }
+    }
 
+    private void OnGUI()
+    {
+        if (bselectionDraw)
+            GUI.Box(new Rect(beginMouseSelecRec.x, -(beginMouseSelecRec.y - Screen.height),
+                (endMouseSelecRec.x - beginMouseSelecRec.x),
+                -(endMouseSelecRec.y - beginMouseSelecRec.y)),
+                myTexture);
     }
 
 
+    private void Selection()
+    {
+        bool foundUnit = false;
 
-    private void drawSprite() {
-        if (!bselectionDraw) {
-        
+
+        if (beginMouseSelec == endMouseSelec)
+        {
+            endMouseSelec = endMouseSelec + new Vector3(.01f, .01f, .01f);
+        }
+
+        Collider2D[] selected = Physics2D.OverlapAreaAll(beginMouseSelec, endMouseSelec);
+        if (selected.Length > 0)
+        {
+            foreach (Collider2D stuff in selected)
+            {
+                if (stuff.gameObject.GetComponent<UnitScript>() != null)
+                {
+                    SelectionList.Add(stuff.gameObject);
+                    foundUnit = true;
+                }
+            }
+
+            if (!foundUnit)
+            {
+                foreach (Collider2D stuff in selected)
+                {
+                    if (stuff.gameObject.GetComponent<TerritoryScript>() != null)
+                    {
+                        SelectionList.Add(stuff.gameObject);
+                    }
+                }
+            }
         }
     }
 
-    public int getTeam()
+
+
+    private void Deselection()
     {
-        return team;
+
+        if (SelectionList.Count > 0)
+            SelectionList.Clear();
     }
 
-    public Color getColor()
-    {
-        return teamColor;
-    }
-
-    public void setColor(Color newColor)
-    {
-        teamColor = newColor;
-    }
 
     private void Update()
     {
-       //V playerClick();
-        
+        playerClick();
+        print(Input.GetMouseButtonDown(0));
+        //print(Input.mousePosition);
+        //print(Event.current.mousePosition);
     }
 }
