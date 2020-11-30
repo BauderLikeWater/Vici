@@ -19,11 +19,13 @@ public class UnitScript : MonoBehaviour
     public GameObject PrevTarget; //Saved target if unit approaches nearby enemy unit first
     private Collider2D[] nearestObject = new Collider2D[1];
 
+    public GameObject AIController;
+
     CircleCollider2D aoe = new CircleCollider2D();
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         teamManager = GameObject.Find("TeamManager");
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
@@ -31,6 +33,8 @@ public class UnitScript : MonoBehaviour
         setColor(tInfo.getPlayerColor(player));
 
         aoe = GetComponent<CircleCollider2D>();
+
+        AIController.GetComponent<AIScript>().AddUnit(this.gameObject);
     }
 
     //updates independently of framerate
@@ -75,6 +79,8 @@ public class UnitScript : MonoBehaviour
     {
         if (Target != null && Target.CompareTag("Invisible Target"))
             Destroy(Target);
+        int rip = AIController.GetComponent<AIScript>().units.IndexOf(this.gameObject);
+        AIController.GetComponent<AIScript>().units.RemoveAt(rip);
     }
 
     private void updatePos()

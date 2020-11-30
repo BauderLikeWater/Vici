@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &231999418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2027824044897189858, guid: a55662b53dabf4aa5bcbfcb6a7f13ad5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1917489180}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &249777166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -389,7 +395,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Target
       value: 
-      objectReference: {fileID: 1192452088}
+      objectReference: {fileID: 231999418}
     - target: {fileID: 2027824044897189858, guid: a55662b53dabf4aa5bcbfcb6a7f13ad5,
         type: 3}
       propertyPath: m_Name
@@ -688,6 +694,11 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 4240254039775864668, guid: be3d305f2516e4625b2aff2b9f2b6b14,
+        type: 3}
+      propertyPath: player
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4240254039775864669, guid: be3d305f2516e4625b2aff2b9f2b6b14,
         type: 3}
       propertyPath: m_Name

@@ -55,6 +55,8 @@ MonoBehaviour:
   teamColor: {r: 0.61960787, g: 1, b: 0.5803922, a: 0}
   Target: {fileID: 0}
   PrevTarget: {fileID: 0}
+  AIController: {fileID: 3534656910052049033, guid: 44fc59c2a40554c1fa6176d462cf4a08,
+    type: 3}
 --- !u!212 &3586736334733061968
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -155,4 +157,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0.30588236, g: 1, b: 1, a: 1}
-  outlineSize: 16
+  outlineSize: 32
