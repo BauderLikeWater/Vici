@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public Sprite mySprite;
     public Camera mainCamera;
     bool bselectionDraw = false;
+    public int player = 0;
+    public int team = 1;
+    public Color teamColor = new Color(1f, 1f, 1f, 1f);
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    /*
     private void playerClick() {
         if (Input.GetMouseButtonDown(0)){ 
             beginMouseSelec = mainCamera.ScreenToWorldPoint(Input.mousePosition); ;
@@ -37,6 +41,26 @@ public class PlayerController : MonoBehaviour
 
         drawSprite();
     }
+    */
+
+    private void playerClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hit.collider != null)
+            {
+                print(hit.collider.gameObject.name);
+                hit.collider.attachedRigidbody.AddForce(Vector2.up);
+            }
+        }
+
+    }
+
+
 
     private void drawSprite() {
         if (!bselectionDraw) {
@@ -44,6 +68,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public int getTeam()
+    {
+        return team;
+    }
+
+    public Color getColor()
+    {
+        return teamColor;
+    }
+
+    public void setColor(Color newColor)
+    {
+        teamColor = newColor;
+    }
 
     private void Update()
     {

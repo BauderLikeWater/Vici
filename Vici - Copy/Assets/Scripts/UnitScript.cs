@@ -8,147 +8,179 @@ using UnityEngine;
 public class UnitScript : MonoBehaviour
 {
 
-    int Health  = 2;  // int that describes amount of time a unit can be "attacked" before "dying"
-    int Speed = 2;   // Float that controls speed of the unit per frame
-    float ActDist = .1f;  // Float (or int if necessary) that determines the radius a unit can act on for attacking and other actions
-    Vector3 Destin;   // Destination for travel 
+    public float Health  = 2f;  // int that describes amount of time a unit can be "attacked" before "dying"
+    public float Speed = 1f;   // Float that controls speed of the unit per frame
+    public float actDist = 0.8f;  // Float (or int if necessary) that determines the radius a unit can act on for attacking and other actions
+    public int player = 0;
+    public int team = 0; //unit team, team 0 is neutral team
+    public Color teamColor;
+    private GameObject teamManager;
     public GameObject Target;    // Target for attacking
-    string State = "Idle";
-    int team = 0;
+    public GameObject PrevTarget; //Saved target if unit approaches nearby enemy unit first
+    private Collider2D[] nearestObject = new Collider2D[1];
+
+    CircleCollider2D aoe = new CircleCollider2D();
+
 
     // Start is called before the first frame update
     void Start()
     {
-        if (Target == null) {
-            Target = new GameObject();
-            Target.transform.Translate(new Vector3(0, 0, 0));
-        }
+        teamManager = GameObject.Find("TeamManager");
+        TeamScript tInfo = teamManager.GetComponent<TeamScript>();
+        setTeam(tInfo.getPlayerTeam(player));
+        setColor(tInfo.getPlayerColor(player));
 
-        
-    }
-
-    //sets a new target, and an appropriate state for the target
-    //I intend for this to be called when the player clicks on an object while 
-    //this unit is selected
-    public void setNewTargetState(GameObject newObject, string newState)
-    {
-        Target = newObject;
-
-        if (Target.name.Contains("Territory") ){
-            if (Target.GetComponent<TerritoryScript>().team == this.team && Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
-                State = "Sacrificing";
-            else
-                State = "Attacking";
-        }
-        else if (Target.name.Contains("Unit"))
-        {
-            if (Target.GetComponent<UnitScript>().team == this.team)
-                State = "Attacking";
-        }
-        //friendly units and other objects will be ignored, so no if case for them
-    }
-
-
-
-    private void updatePos() {
-
-        //saves the math for testing positions of the x and y for multiple uses
-        float differenceX = transform.position.x - Target.transform.position.x;
-        bool testX = (Mathf.Abs(differenceX) >= ActDist);
-
-        float differenceY = transform.position.y - Target.transform.position.y;
-        bool testY = (Mathf.Abs(differenceY) >= ActDist);
-
-        bool clearX = false;
-        bool clearY = false;
-
-
-        //tests x
-        if (testX && differenceX > 0)
-        {
-
-            transform.position = new Vector3(
-                transform.position.x - Speed * Time.fixedDeltaTime,
-                transform.position.y,
-                transform.position.z
-                );
-        }
-        else if (testX && differenceX < 0)
-        {
-            transform.position = new Vector3(
-                transform.position.x + Speed * Time.fixedDeltaTime,
-                transform.position.y,
-                transform.position.z
-                );
-        }
-        else
-            clearX = true;
-
-        //tests y
-        if (testY && differenceY > 0)
-        {
-            transform.position = new Vector3(
-                transform.position.x,
-                transform.position.y - Speed  * Time.fixedDeltaTime,
-                transform.position.z
-                );
-        }
-        else if (testY && differenceY < 0)
-        {
-            transform.position = new Vector3(
-                transform.position.x,
-                transform.position.y + Speed * Time.fixedDeltaTime,
-                transform.position.z
-                );
-        }
-        else
-            clearY = true;
-
-
-        //calls the update of the units current action if inside act dist of Target
-        if (clearX && clearY)
-        {
-            if (State == "Attacking")
-                Attack();
-            else if (State == "Sacrificing")
-                Sacrifice();
-            //move and idle don't need/have update functions
-        }
-    }
-
-    //WIP attack function
-    private void Attack() {
-        if (Target.GetComponent<UnitScript>() != null)
-            Destroy(Target.GetComponent<UnitScript>().gameObject);
-        else if(Target.GetComponent<TerritoryScript>() != null)
-            Target.GetComponent<TerritoryScript>().adjustHealth(team);
-    }
-    //WIP sacrifice function
-    private void Sacrifice() {
-        //needs to call the territory's add health function then destroy self
-        Target.GetComponent<TerritoryScript>().adjustHealth(team);
-        Destroy(this.gameObject);
-    }
-
-    //Keybinds for testing
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-            if (State == "Attacking")
-                State = "Sacrificing";
-            else if (State == "Sacrificing")
-                State = "Moving";
-            else if (State == "Moving")
-                State = "Idle";
-            else
-                State = "Attacking";
+        aoe = GetComponent<CircleCollider2D>();
     }
 
     //updates independently of framerate
     private void FixedUpdate()
     {
-
-        if (State != "Idle")
+        if (Target != null)
             updatePos();
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<UnitScript>() != null)
+        {
+            if (collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
+            {
+                Action();
+            }
+            else if (collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
+            {
+                PrevTarget = Target;
+                Target = collision.gameObject;
+                Action();
+            }
+        }
+        else if (collision.gameObject.GetComponent<TerritoryScript>() != null && collision.gameObject == Target)
+        {
+            Action();
+        }
+        else if (collision.gameObject.CompareTag("Invisible Target") && collision.gameObject == Target)
+        {
+            Destroy(Target);
+            Target = null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (Target != null && Target.CompareTag("Invisible Target"))
+            Destroy(Target);
+    }
+
+    private void updatePos()
+    {
+        //Magical rotation code that I spent 6 hours on
+        float offset = -90f;
+        float rotationSpeed = 2.5f;
+        Vector3 direction = Target.transform.position - transform.position;
+        direction.Normalize();
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+
+        //One line to actually move
+        transform.Translate(Vector3.up * Speed * Time.fixedDeltaTime, Space.Self);
+
+        //Collider
+        //CheckForEnemies();
+    }
+
+    private void Action()
+    {
+        if (Target.GetComponent<UnitScript>() != null)
+        {
+            Attack(Target);
+            if(PrevTarget != null)
+            {
+                Target = PrevTarget;
+                PrevTarget = null;
+            }
+            else
+            {
+                Target = null;
+            }
+        }
+        else if (Target.GetComponent<TerritoryScript>() != null)
+        {
+            if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
+            {
+                //ActionTerritory(Target);
+                Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
+                Destroy(this.gameObject);
+            }
+            else
+                Target = null;
+        }
+    }
+
+    private void Attack(GameObject currTarget)
+    {
+        Destroy(currTarget);
+        Target = null;
+    }
+
+    private void ActionTerritory(GameObject currTarget)
+    {
+        TerritoryScript tScript = currTarget.GetComponent<TerritoryScript>();
+        if (tScript.team == team && tScript.health <= tScript.healthCap)
+            tScript.health++;
+        else if (tScript.team != team)
+            tScript.health--;
+
+        if(tScript.health <= 0 && tScript.team != 0)
+        {
+            tScript.convert(0);
+            tScript.health = 20;
+        }
+        else if(tScript.health <= 0 && tScript.team == 0)
+        {
+            tScript.convert(player);
+            tScript.health = 15;
+        }
+
+        
+    }
+
+    //sets current target
+    public void setTarget(GameObject t)
+    {
+        Target = t;
+    }
+
+    //returns current target
+    public GameObject getTarget()
+    {
+        return Target;
+    }
+
+    //sets color
+    public void setColor(Color c)
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        teamColor = c;
+        sprite.color = teamColor;
+    }
+
+    //sets color
+    public Color getColor()
+    {
+        return teamColor;
+    }
+
+    //sets team, neutral is considered team 0
+    public void setTeam(int t)
+    {
+        team = t;
+    }
+
+    //returns team
+    public int getTeam()
+    {
+        return team;
     }
 }
