@@ -118,3 +118,5 @@ MonoBehaviour:
     m_StretchHeight: 1
   RandomTarget: {fileID: 2755307334144635002, guid: c96e038df230242c4b3f5dcfbc3173c0,
     type: 3}
+  pauseMenu: {fileID: 1110225092169542561, guid: 5c9013b35552c410f8cb700eafedaa68,
+    type: 3}

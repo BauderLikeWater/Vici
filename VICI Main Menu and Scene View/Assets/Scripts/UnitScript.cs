@@ -7,6 +7,16 @@ using UnityEngine;
 
 public class UnitScript : MonoBehaviour
 {
+    /* Future note to self:
+     * You can make Targets dynamic types to allow for Vector3s instead of invisible targets,
+     * but that requires adding a check in FixedUpdate that says:
+     * 
+     * if(Target type is Vector3 AND Unit Position is within .1f of all Vector axis)
+     *      Target = null;
+     *      
+     * Then you have to add handlers in the movement script that get the Target's Vector3 if it's
+     * a GameObject instead of naturally being a Vector3, instead of getting that info in-line.
+     */
 
     public float Health  = 2f;  // int that describes amount of time a unit can be "attacked" before "dying"
     public float Speed = 1f;   // Float that controls speed of the unit per frame
@@ -153,8 +163,6 @@ public class UnitScript : MonoBehaviour
             tScript.convert(player);
             tScript.health = 15;
         }
-
-        
     }
 
     //sets current target
