@@ -24,6 +24,8 @@ public class TerritoryScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Target = null;
+
         teamManager = GameObject.Find("TeamManager");
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
         setTeam(tInfo.getPlayerTeam(player));
@@ -34,15 +36,22 @@ public class TerritoryScript : MonoBehaviour
         //physCollider = this.GetComponent<CircleCollider2D>();
 
         updateDiameter(health);
-        
+
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 359f));
     }
 
     private void Update()
     {
-        /*
+
         if (Input.GetKeyDown(KeyCode.A))
             generateUnit();
-        */
+
+
+        //if territory health is at its cap and doesn't need to be its own target anymore
+        if (Target != null)
+            if (Target.GetComponent<TerritoryScript>() != null)
+                if (Target.GetComponent<TerritoryScript>().health >= Target.GetComponent<TerritoryScript>().healthCap)
+                    Target = null;
     }
 
     private void FixedUpdate()

@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (!pauseMenu.activeSelf)
             playerClick();
 
-        print(hasSelected);
+        //print(hasSelected);
         //print(Input.GetMouseButtonDown(0));
         //print(Input.mousePosition);
         //print(Event.current.mousePosition);
@@ -107,8 +107,24 @@ public class PlayerController : MonoBehaviour
 
         Collider2D[] selected = Physics2D.OverlapAreaAll(beginMouseSelec, endMouseSelec);
 
+        int currentCount = SelectionList.Count;
+        bool justSelectedNew = selected.Length > 0;
+        bool givenTarget = false;
+
+        //List<GameObject> TempList = new List<GameObject>();
+
+        //user was not selecting units or additional selectable objects, and did not highlight
+        if (!highlighted && hasSelected && !controlClicked)
+        {
+            giveTarget(selected);
+            givenTarget = true;
+        }
+        if (!controlClicked && hasSelected && justSelectedNew)
+        {
+            Deselection();
+        }
         //if nothing has already been selected, or user control clicked to add to selection
-        if (selected.Length > 0 && (!hasSelected || controlClicked))
+        if (justSelectedNew && !givenTarget && (!hasSelected || controlClicked))
         {
             foreach (Collider2D objs in selected)
             {
@@ -139,14 +155,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (SelectionList.Count > 0)
-                hasSelected = true;
+            //SelectionList = TempList;
+            //print(SelectionList.Count);
+            //TempList.Clear();
+
+            hasSelected = true;
         }
-        //user was not selecting units or additional selectable objects, and did not highlight
-        else if(!highlighted)
-        {
-            giveTarget(selected);
-        }
+        
 
     }
 

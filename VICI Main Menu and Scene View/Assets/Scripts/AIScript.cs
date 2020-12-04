@@ -21,12 +21,11 @@ public class AIScript : MonoBehaviour
 
 
     void GiveTarget() {
-        print(units.Count);
+        //print(units.Count);
         for(int i = 0; i < units.Count; i++)
         {
             if (units[i] != null)
             {
-                print("WHY");
                 if (units[i].GetComponent<UnitScript>().getTarget() != null)
                     units[i].GetComponent<UnitScript>().PrevTarget = target;
                 else

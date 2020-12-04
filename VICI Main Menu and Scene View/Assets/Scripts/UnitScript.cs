@@ -128,6 +128,12 @@ public class UnitScript : MonoBehaviour
         }
         else if (Target.GetComponent<TerritoryScript>() != null)
         {
+            /*
+             * THIS MEANS YOU CANNOT TARGET AN ENEMY TERRITORY AT FULL HEALTH
+             * 
+             * Possible fixes include changing territory health from unitscript rather than territoryscript.
+             */
+
             if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
             {
                 //ActionTerritory(Target);
