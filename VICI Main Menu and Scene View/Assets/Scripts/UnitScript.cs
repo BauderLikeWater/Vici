@@ -25,9 +25,10 @@ public class UnitScript : MonoBehaviour
     public int team = 0; //unit team, team 0 is neutral team
     public Color teamColor;
     private GameObject teamManager;
-    public GameObject Target;    // Target for attacking
-    public GameObject PrevTarget; //Saved target if unit approaches nearby enemy unit first
+    public dynamic Target;    // Target for attacking
+    public dynamic PrevTarget; //Saved target if unit approaches nearby enemy unit first
     private Collider2D[] nearestObject = new Collider2D[1];
+    private bool isTargVector = false;
 
     public GameObject AIController;
 
@@ -44,6 +45,9 @@ public class UnitScript : MonoBehaviour
 
         aoe = GetComponent<CircleCollider2D>();
 
+        //Checks to see is Target is a Vector3
+        isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
+
         AIController.GetComponent<AIScript>().AddUnit(this.gameObject);
     }
 
@@ -56,23 +60,29 @@ public class UnitScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<UnitScript>() != null)
+        if(!isTargVector)
         {
-            if (collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
+            if (collision.gameObject.GetComponent<UnitScript>() != null)
+            {
+                if (collision.gameObject == Target && collision.gameObject.GetComponent<UnitScript>().team != team)
+                {
+                    Action();
+                }
+                else if (collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
+                {
+                    PrevTarget = Target;
+                    Target = collision.gameObject;
+                    Action();
+                }
+            }
+            else if (collision.gameObject.GetComponent<TerritoryScript>() != null && collision.gameObject == Target)
             {
                 Action();
             }
-            else if (collision.gameObject.GetComponent<UnitScript>().team != team && PrevTarget == null)
-            {
-                PrevTarget = Target;
-                Target = collision.gameObject;
-                Action();
-            }
         }
-        else if (collision.gameObject.GetComponent<TerritoryScript>() != null && collision.gameObject == Target)
-        {
-            Action();
-        }
+        /*
+         * No longer necessary now that Invisible Targets are actually just Vector3s
+         * 
         else if (collision.gameObject.CompareTag("Invisible Target") && collision.gameObject == Target)
         {
             Destroy(Target);
@@ -83,11 +93,26 @@ public class UnitScript : MonoBehaviour
                 PrevTarget = null;
             }
         }
+        */
     }
+
+    /* 
+     * This is here for future implementation of moving units if they occupy the same space as others when they complete their movement
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(Target == null)
+        {
+            if (timeStationary < 0.1f && collision.gameObject.GetComponent<UnitScript>() != null && collision.gameObject.GetComponent<UnitScript>().team == team)
+            {
+                Target = randomPosition(collision.collider.bounds.size.x);
+            }
+        }
+    }
+    */
 
     private void OnDestroy()
     {
-        if (Target != null && Target.CompareTag("Invisible Target"))
+        if (!isTargVector && Target != null && Target.CompareTag("Invisible Target"))
             Destroy(Target);
         int rip = AIController.GetComponent<AIScript>().units.IndexOf(this.gameObject);
         AIController.GetComponent<AIScript>().units.RemoveAt(rip);
@@ -98,7 +123,15 @@ public class UnitScript : MonoBehaviour
         //Magical rotation code that I spent 6 hours on
         float offset = -90f;
         float rotationSpeed = 2.5f;
-        Vector3 direction = Target.transform.position - transform.position;
+        Vector3 direction;
+
+        isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
+
+        if (isTargVector)
+            direction = Target - transform.position;
+        else
+            direction = Target.transform.position - transform.position;
+
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
@@ -106,6 +139,16 @@ public class UnitScript : MonoBehaviour
 
         //One line to actually move
         transform.Translate(Vector3.up * Speed * Time.fixedDeltaTime, Space.Self);
+
+        //Checks if Target is a Vector3
+        if(isTargVector)
+        {
+            if(Mathf.Abs(Vector3.Distance(transform.position, Target)) < 0.1f)
+            {
+                Target = PrevTarget;
+                PrevTarget = null;
+            }
+        }
 
         //Collider
         //CheckForEnemies();
@@ -134,7 +177,7 @@ public class UnitScript : MonoBehaviour
              * Possible fixes include changing territory health from unitscript rather than territoryscript.
              */
 
-            if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap)
+            if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap || Target.GetComponent<TerritoryScript>().team != team)
             {
                 //ActionTerritory(Target);
                 Target.GetComponent<TerritoryScript>().adjustHealth(team, player);
@@ -171,14 +214,34 @@ public class UnitScript : MonoBehaviour
         }
     }
 
+    //variation of randomPosition from Territory script. Will be called when two units occupy the same space to send a new position for the incoming unit
+    /*
+     * Will be implemented in future update
+    private Vector3 randomPosition(float diameter)
+    {
+        float theta = 360 * UnityEngine.Random.Range(0.0f, 1.0f);
+        float innerRadius = (diameter / 2f) + 0.1f;
+        float outerRadus = innerRadius + diameter + 0.4f;
+
+        float dist = Mathf.Sqrt(UnityEngine.Random.Range(0.0f, 1.0f) * (Mathf.Pow(innerRadius, 2.0f) - Mathf.Pow(outerRadus, 2f)) + Mathf.Pow(outerRadus, 2f));
+
+        float x = (dist * Mathf.Cos(theta)) + this.transform.position.x;
+        float y = (dist * Mathf.Sin(theta)) + this.transform.position.y;
+
+        return new Vector3(x, y, 0f);
+    }
+    */
+
     //sets current target
-    public void setTarget(GameObject t)
+    public void setTarget(dynamic t)
     {
         Target = t;
+        //Checks to see is Target is a Vector3
+        isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
     }
 
     //returns current target
-    public GameObject getTarget()
+    public dynamic getTarget()
     {
         return Target;
     }

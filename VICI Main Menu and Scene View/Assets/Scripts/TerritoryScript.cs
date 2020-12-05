@@ -14,8 +14,9 @@ public class TerritoryScript : MonoBehaviour
     public Color teamColor;
     private float genCounter = 0f;
     private float genRate = 10f;
-    public GameObject Target = null;
+    public dynamic Target;
     public GameObject RandomTarget;
+    private bool isTargVector = false;
 
     SpriteRenderer sprite;
     //private CircleCollider2D physCollider;
@@ -24,14 +25,14 @@ public class TerritoryScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Target = null;
-
         teamManager = GameObject.Find("TeamManager");
         TeamScript tInfo = teamManager.GetComponent<TeamScript>();
         setTeam(tInfo.getPlayerTeam(player));
 
         sprite = GetComponent<SpriteRenderer>();
         setColor(tInfo.getPlayerColor(player));
+
+        isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
 
         //physCollider = this.GetComponent<CircleCollider2D>();
 
@@ -42,15 +43,16 @@ public class TerritoryScript : MonoBehaviour
 
     private void Update()
     {
-
+        /*
         if (Input.GetKeyDown(KeyCode.A))
             generateUnit();
+        */
 
 
         //if territory health is at its cap and doesn't need to be its own target anymore
         if (Target != null)
-            if (Target.GetComponent<TerritoryScript>() != null)
-                if (Target.GetComponent<TerritoryScript>().health >= Target.GetComponent<TerritoryScript>().healthCap)
+            if (!isTargVector && Target.GetComponent<TerritoryScript>() != null)
+                if (Target.GetComponent<TerritoryScript>().team == team && Target.GetComponent<TerritoryScript>().health >= Target.GetComponent<TerritoryScript>().healthCap)
                     Target = null;
     }
 
@@ -130,6 +132,7 @@ public class TerritoryScript : MonoBehaviour
         setTeam(tInfo.getPlayerTeam(unitPlayer));
         setPlayer(unitPlayer);
         setColor(tInfo.getPlayerColor(unitPlayer));
+        Target = null;
     }
     
     private void generateUnit()
@@ -144,8 +147,10 @@ public class TerritoryScript : MonoBehaviour
         if (Target != null)
             nUscr.PrevTarget = Target;
 
-        nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
 
+        Vector3 t = randomPosition();
+        nUscr.setTarget(t);
+           
 
         /*
         if (Target != null)
@@ -157,13 +162,14 @@ public class TerritoryScript : MonoBehaviour
         */
     }
 
-    public void setTarget(GameObject t)
+    public void setTarget(dynamic t)
     {
         Target = t;
+        isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
     }
 
     //returns current target
-    public GameObject getTarget()
+    public dynamic getTarget()
     {
         return Target;
     }

@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{140F85C1-CA32-7A8B-4D8D-C1D124A47183}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TerritoryScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="159" Column="15" />
-      <File FileName="Assets/Scripts/UnitScript.cs" Line="129" Column="14" />
-      <File FileName="Assets/Scripts/TerritoryScript.cs" Line="60" Column="44" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="170" Column="16" />
+      <File FileName="Assets/Scripts/UnitScript.cs" Line="77" Column="85" />
+      <File FileName="Assets/Scripts/TerritoryScript.cs" Line="147" Column="43" />
       <File FileName="Assets/Scripts/TeamScript.cs" />
     </Files>
     <Pads>
@@ -12,7 +12,7 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="TerritoryScript.cs" selected="True" />
+                <Node name="PlayerController.cs" selected="True" />
               </Node>
             </Node>
           </Node>

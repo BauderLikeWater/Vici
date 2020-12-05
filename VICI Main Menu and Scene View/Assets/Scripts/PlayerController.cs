@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/*
+ * Issues with dynamic type?
+ * https://forum.unity.com/threads/missing-compiler-required-member-microsoft-csharp-runtimebinder-csharpargumentinfo-create.563839/
+ * ^Explains how to set up project to support dynamic types
+ */
+
+
 public class PlayerController : MonoBehaviour
 {
     #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
@@ -167,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     private void giveTarget(Collider2D[] targeted)
     {
-        GameObject targ;
+        dynamic targ;
 
         if (targeted.Length > 0)
         {
@@ -177,7 +184,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             //if switching targeting to vector system, then targ should equal beginMouseSelec
-            targ = Instantiate(RandomTarget, beginMouseSelec, Quaternion.Euler(0f, 0f, 0f));
+            //targ = Instantiate(RandomTarget, beginMouseSelec, Quaternion.Euler(0f, 0f, 0f));
+            targ = new Vector3(beginMouseSelec.x, beginMouseSelec.y, 0f);
         }
 
         for (int i = 0; i < SelectionList.Count; i++)
