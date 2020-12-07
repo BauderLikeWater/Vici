@@ -5,7 +5,7 @@ using UnityEngine;
 public class AIScript : MonoBehaviour
 {
     public GameObject target;
-    int team = 4;
+    public int team = 4;
     float counter =  0;
 
     public List<GameObject> units = new List<GameObject>();
@@ -20,11 +20,12 @@ public class AIScript : MonoBehaviour
     }
 
 
-    void GiveTarget() {
+    void GiveTarget()
+    {
         //print(units.Count);
         for(int i = 0; i < units.Count; i++)
         {
-            if (units[i] != null)
+            if (units[i] != null && units[i].GetComponent<UnitScript>().getTeam() == team)
             {
                 if (units[i].GetComponent<UnitScript>().getTarget() != null)
                     units[i].GetComponent<UnitScript>().PrevTarget = target;
@@ -34,8 +35,10 @@ public class AIScript : MonoBehaviour
         }
     }
 
-    void FindTarget() {
-        foreach (GameObject terr in territories) {
+    void FindTarget()
+    {
+        foreach (GameObject terr in territories)
+        {
             if (terr.GetComponent<TerritoryScript>().team == 0)
             {
                 target = terr;
@@ -53,16 +56,18 @@ public class AIScript : MonoBehaviour
         }
     }
 
-    public void AddUnit(GameObject newUnit) {
+    public void AddUnit(GameObject newUnit)
+    {
         units.Add(newUnit);
-        //print("test");
+        //print(units.Count);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         counter += Time.fixedDeltaTime;
-        if (counter >= 20.0f)
+        if (counter >= 10.0f)
         {
             //print(target.GetComponent<TerritoryScript>().getTeam());
             //if (target.GetComponent<TerritoryScript>().team == 4)

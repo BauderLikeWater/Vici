@@ -19,7 +19,8 @@ public class TerritoryScript : MonoBehaviour
     private bool isTargVector = false;
 
     SpriteRenderer sprite;
-    //private CircleCollider2D physCollider;
+
+    GameObject UIController;
 
 
     // Start is called before the first frame update
@@ -34,20 +35,15 @@ public class TerritoryScript : MonoBehaviour
 
         isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
 
-        //physCollider = this.GetComponent<CircleCollider2D>();
-
         updateDiameter(health);
 
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 359f));
+
+        UIController = FindObjectOfType<UIController>().gameObject;
     }
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.A))
-            generateUnit();
-        */
-
 
         //if territory health is at its cap and doesn't need to be its own target anymore
         if (Target != null)
@@ -100,16 +96,8 @@ public class TerritoryScript : MonoBehaviour
 
         transform.localScale = new Vector3(diameter, diameter, 0);
 
-        //unused sprite scaler
-        //sprite.size = new Vector2(diameter, diameter);
-
-        //new generation rate algorithm
-        //to increase genration rate, reduce the denominator
-        //a denominator of 132 will produce a unit at max health every 1.5 seconds
-
         genRate = 120f / (float)health;
 
-        //genRate = .5f;
     }
 
     private Vector3 randomPosition()
@@ -133,11 +121,12 @@ public class TerritoryScript : MonoBehaviour
         setPlayer(unitPlayer);
         setColor(tInfo.getPlayerColor(unitPlayer));
         Target = null;
+
+        UIController.GetComponent<UIController>().updateTerritories();
     }
     
     private void generateUnit()
     {
-        //print("Generate");
         GameObject newUnit = Instantiate(Unit, transform.position, Quaternion.Euler(0f, 0f, 180f));
         UnitScript nUscr = newUnit.GetComponent<UnitScript>();
         nUscr.player = player;
@@ -150,16 +139,7 @@ public class TerritoryScript : MonoBehaviour
 
         Vector3 t = randomPosition();
         nUscr.setTarget(t);
-           
-
-        /*
-        if (Target != null)
-            nUscr.setTarget(Target);
-        else
-        {
-            nUscr.setTarget(Instantiate(RandomTarget, randomPosition(), Quaternion.Euler(0f, 0f, 0f)));
-        }
-        */
+        
     }
 
     public void setTarget(dynamic t)

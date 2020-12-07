@@ -7,16 +7,6 @@ using UnityEngine;
 
 public class UnitScript : MonoBehaviour
 {
-    /* Future note to self:
-     * You can make Targets dynamic types to allow for Vector3s instead of invisible targets,
-     * but that requires adding a check in FixedUpdate that says:
-     * 
-     * if(Target type is Vector3 AND Unit Position is within .1f of all Vector axis)
-     *      Target = null;
-     *      
-     * Then you have to add handlers in the movement script that get the Target's Vector3 if it's
-     * a GameObject instead of naturally being a Vector3, instead of getting that info in-line.
-     */
 
     public float Health  = 2f;  // int that describes amount of time a unit can be "attacked" before "dying"
     public float Speed = 1f;   // Float that controls speed of the unit per frame
@@ -31,6 +21,7 @@ public class UnitScript : MonoBehaviour
     private bool isTargVector = false;
 
     public GameObject AIController;
+    public GameObject UIController;
 
     CircleCollider2D aoe = new CircleCollider2D();
 
@@ -48,7 +39,11 @@ public class UnitScript : MonoBehaviour
         //Checks to see is Target is a Vector3
         isTargVector = typeof(UnityEngine.Vector3).IsInstanceOfType(Target);
 
+        AIController = FindObjectOfType<AIScript>().gameObject;
+        UIController = FindObjectOfType<UIController>().gameObject;
+
         AIController.GetComponent<AIScript>().AddUnit(this.gameObject);
+        UIController.GetComponent<UIController>().AddUnit(this.gameObject);
     }
 
     //updates independently of framerate
@@ -114,8 +109,15 @@ public class UnitScript : MonoBehaviour
     {
         if (!isTargVector && Target != null && Target.CompareTag("Invisible Target"))
             Destroy(Target);
-        int rip = AIController.GetComponent<AIScript>().units.IndexOf(this.gameObject);
-        AIController.GetComponent<AIScript>().units.RemoveAt(rip);
+        int dead = AIController.GetComponent<AIScript>().units.IndexOf(this.gameObject);
+        AIController.GetComponent<AIScript>().units.RemoveAt(dead);
+
+        if(UIController.GetComponent<UIController>().team == team)
+        {
+            int dead2 = UIController.GetComponent<UIController>().units.IndexOf(this.gameObject);
+            UIController.GetComponent<UIController>().units.RemoveAt(dead2);
+            UIController.GetComponent<UIController>().setUnitText();
+        }
     }
 
     private void updatePos()
@@ -171,12 +173,6 @@ public class UnitScript : MonoBehaviour
         }
         else if (Target.GetComponent<TerritoryScript>() != null)
         {
-            /*
-             * THIS MEANS YOU CANNOT TARGET AN ENEMY TERRITORY AT FULL HEALTH
-             * 
-             * Possible fixes include changing territory health from unitscript rather than territoryscript.
-             */
-
             if (Target.GetComponent<TerritoryScript>().health < Target.GetComponent<TerritoryScript>().healthCap || Target.GetComponent<TerritoryScript>().team != team)
             {
                 //ActionTerritory(Target);

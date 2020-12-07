@@ -6,7 +6,7 @@ using System;
 /*
  * Issues with dynamic type?
  * https://forum.unity.com/threads/missing-compiler-required-member-microsoft-csharp-runtimebinder-csharpargumentinfo-create.563839/
- * ^Explains how to set up project to support dynamic types
+ * ^Explains how to set up project to support dynamic types, but once setup we shouldn't have to do anything special when building game.
  */
 
 
@@ -58,11 +58,6 @@ public class PlayerController : MonoBehaviour
 
         if (!pauseMenu.activeSelf)
             playerClick();
-
-        //print(hasSelected);
-        //print(Input.GetMouseButtonDown(0));
-        //print(Input.mousePosition);
-        //print(Event.current.mousePosition);
     }
 
     private void OnGUI()
@@ -99,15 +94,6 @@ public class PlayerController : MonoBehaviour
 
     private void Selection(bool highlighted, bool controlClicked)
     {
-        /* 
-         * Note to self: You can check the whole array of selected before adding to see if you need to deselect and select new units.
-         * This is inefficient though because you're running down the whole array twice. Trying to see if the new list is bigger than
-         * the old one once you've added more units without holding control and then removing the old ones with .RemoveRange(,) poses a 
-         * problem if a unit is destroyed. Do the list indices change, or is that index just null? Is this better behavior than the 
-         * current one? This is worth future consideration.
-         * 
-         * Extra note: I think destroyed units leave a null value in the index. This shouldn't be too hard to work with if that's the case.
-         */
 
         if (beginMouseSelec == endMouseSelec)
             endMouseSelec += new Vector3(.1f, .1f, .1f);
@@ -161,10 +147,6 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-
-            //SelectionList = TempList;
-            //print(SelectionList.Count);
-            //TempList.Clear();
 
             hasSelected = true;
         }

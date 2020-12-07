@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGame Example.unity
     guid: e370681711d5ce94ba2249635abe3e68
+  - enabled: 1
+    path: Assets/Scenes/DefeatScreen.unity
+    guid: 4bfc1d8d68df2410bbf36e8a97a87a53
+  - enabled: 1
+    path: Assets/Scenes/VictoryScreen.unity
+    guid: b581623cb88c5460e9dabf3b93b60796
   m_configObjects: {}

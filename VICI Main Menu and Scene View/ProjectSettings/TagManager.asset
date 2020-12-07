@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Selectable
   - Invisible Target
   - Territory
+  - Unit
+  - Selectable
   layers:
   - Default
   - TransparentFX

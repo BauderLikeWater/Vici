@@ -5,9 +5,9 @@ ScriptsOnlyBuild:
     - PlayerController
     - SpriteOutline
     - StartAndQuit
-    - SudoEnemyController
     - TeamScript
     - TerritoryScript
+    - UIController
     - UnitScript
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
@@ -43,6 +43,61 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   sceneClasses:
+    Assets/Scenes/DefeatScreen.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11260}
+    - Class: 114
+      Script: {instanceID: 11262}
+    - Class: 114
+      Script: {instanceID: 11266}
+    - Class: 114
+      Script: {instanceID: 11640}
+    - Class: 114
+      Script: {instanceID: 12964}
+    - Class: 114
+      Script: {instanceID: 13380}
+    - Class: 114
+      Script: {instanceID: 13714}
+    - Class: 114
+      Script: {instanceID: 13820}
+    - Class: 114
+      Script: {instanceID: 14458}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/InGame Example.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -73,37 +128,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11262}
     - Class: 114
-      Script: {instanceID: 11576}
+      Script: {instanceID: 11264}
     - Class: 114
-      Script: {instanceID: 11632}
+      Script: {instanceID: 11266}
     - Class: 114
-      Script: {instanceID: 11714}
+      Script: {instanceID: 11584}
     - Class: 114
-      Script: {instanceID: 12000}
+      Script: {instanceID: 11640}
     - Class: 114
-      Script: {instanceID: 12100}
+      Script: {instanceID: 11722}
     - Class: 114
-      Script: {instanceID: 12954}
+      Script: {instanceID: 11820}
     - Class: 114
-      Script: {instanceID: 13018}
+      Script: {instanceID: 12010}
     - Class: 114
-      Script: {instanceID: 13090}
+      Script: {instanceID: 12110}
     - Class: 114
-      Script: {instanceID: 13372}
+      Script: {instanceID: 12964}
     - Class: 114
-      Script: {instanceID: 13704}
+      Script: {instanceID: 13098}
     - Class: 114
-      Script: {instanceID: 13718}
+      Script: {instanceID: 13380}
     - Class: 114
-      Script: {instanceID: 13810}
+      Script: {instanceID: 13714}
     - Class: 114
-      Script: {instanceID: 14446}
+      Script: {instanceID: 13728}
     - Class: 114
-      Script: {instanceID: 14488}
+      Script: {instanceID: 13820}
     - Class: 114
-      Script: {instanceID: 59034}
+      Script: {instanceID: 14458}
     - Class: 114
-      Script: {instanceID: 72012}
+      Script: {instanceID: 65882}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -150,39 +205,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11262}
     - Class: 114
-      Script: {instanceID: 11576}
+      Script: {instanceID: 11264}
     - Class: 114
-      Script: {instanceID: 11632}
+      Script: {instanceID: 11266}
     - Class: 114
-      Script: {instanceID: 11682}
+      Script: {instanceID: 11584}
     - Class: 114
-      Script: {instanceID: 11714}
+      Script: {instanceID: 11640}
     - Class: 114
-      Script: {instanceID: 11826}
+      Script: {instanceID: 11690}
     - Class: 114
-      Script: {instanceID: 11964}
+      Script: {instanceID: 11722}
     - Class: 114
-      Script: {instanceID: 12356}
+      Script: {instanceID: 11836}
     - Class: 114
-      Script: {instanceID: 12954}
+      Script: {instanceID: 11974}
     - Class: 114
-      Script: {instanceID: 13018}
+      Script: {instanceID: 12366}
     - Class: 114
-      Script: {instanceID: 13372}
+      Script: {instanceID: 12964}
     - Class: 114
-      Script: {instanceID: 13392}
+      Script: {instanceID: 13380}
     - Class: 114
-      Script: {instanceID: 13704}
+      Script: {instanceID: 13400}
     - Class: 114
-      Script: {instanceID: 13810}
+      Script: {instanceID: 13714}
     - Class: 114
-      Script: {instanceID: 14100}
+      Script: {instanceID: 13820}
     - Class: 114
-      Script: {instanceID: 14276}
+      Script: {instanceID: 14112}
     - Class: 114
-      Script: {instanceID: 14446}
+      Script: {instanceID: 14288}
     - Class: 114
-      Script: {instanceID: 14488}
+      Script: {instanceID: 14458}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -192,6 +247,61 @@ ScriptsOnlyBuild:
     - Class: 196
       Script: {instanceID: 0}
     - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/VictoryScreen.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11260}
+    - Class: 114
+      Script: {instanceID: 11262}
+    - Class: 114
+      Script: {instanceID: 11266}
+    - Class: 114
+      Script: {instanceID: 11640}
+    - Class: 114
+      Script: {instanceID: 12964}
+    - Class: 114
+      Script: {instanceID: 13380}
+    - Class: 114
+      Script: {instanceID: 13714}
+    - Class: 114
+      Script: {instanceID: 13820}
+    - Class: 114
+      Script: {instanceID: 14458}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -214,6 +324,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: EventSystem
+  - hash:
+      serializedVersion: 2
+      Hash: 7072231382eb3c4871b3dd75ad0227e1
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Slider
+  - hash:
+      serializedVersion: 2
+      Hash: 5f1752ed2092162f016c19510c28a8b9
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Button
   - hash:
       serializedVersion: 2
       Hash: c42672c997f8be6b1aa86a927ebea785
@@ -312,7 +434,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: e9f9851c8808dce21d19ce1068fafcd8
+      Hash: 76f3588910f3e506d67c81df4e4d29d3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UnitScript
@@ -340,6 +462,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalAsset
+  - hash:
+      serializedVersion: 2
+      Hash: ea83cb09569cdf56e3731a2041e9eb1c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AIScript
   - hash:
       serializedVersion: 2
       Hash: 0dbc3be398b4869a5c8d0d8481ee402c
@@ -396,7 +524,7 @@ ScriptsOnlyBuild:
     className: PixelPerfectCamera
   - hash:
       serializedVersion: 2
-      Hash: e29b9b028debd1202b496c6fd436a4f5
+      Hash: 2b4bbfa306ea0b054319b9f789fd9fdb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -552,19 +680,13 @@ ScriptsOnlyBuild:
     className: ChatController
   - hash:
       serializedVersion: 2
-      Hash: 5f1752ed2092162f016c19510c28a8b9
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Button
-  - hash:
-      serializedVersion: 2
       Hash: f84d945e5e1ca985698660fc26e9657f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 09ef7f709ba63408f984d38082c87163
+      Hash: 1b58bf9220999e58af4222909947d1c8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TerritoryScript
@@ -900,6 +1022,12 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
+      Hash: e29b9b028debd1202b496c6fd436a4f5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SudoEnemyController
+  - hash:
+      serializedVersion: 2
       Hash: aa88ae22474df55295327e4ee99e5a24
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -910,12 +1038,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalEmitter
-  - hash:
-      serializedVersion: 2
-      Hash: 7072231382eb3c4871b3dd75ad0227e1
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Slider
   - hash:
       serializedVersion: 2
       Hash: 0fd6822f6177297bd0eb4d83cc7a9030
@@ -930,24 +1052,14 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: e2931650d337cf6250b0effd76817990
+      Hash: 12281588dd5d6221f9190d2d76073039
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: PlayerControllerOLD
-  - hash:
-      serializedVersion: 2
-      Hash: 7d9b46cb9083c5486ec56e99d02e48fd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: AIScript
-  - hash:
-      serializedVersion: 2
-      Hash: e29b9b028debd1202b496c6fd436a4f5
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SudoEnemyController
+    className: UIController
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/InGame Example.unity
-  playerPath: /Users/dbauder/This Mac Only/Vici/New Unity Project (1).exe
+  - Assets/Scenes/DefeatScreen.unity
+  - Assets/Scenes/VictoryScreen.unity
+  playerPath: /Users/dbauder/This Mac Only/Vici Windows/Vici Education Edition.exe

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4411688670562236660}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Selectable
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,10 +53,7 @@ MonoBehaviour:
   player: 0
   team: 0
   teamColor: {r: 0.61960787, g: 1, b: 0.5803922, a: 0}
-  Target: {fileID: 0}
-  PrevTarget: {fileID: 0}
-  AIController: {fileID: 3534656910052049033, guid: 44fc59c2a40554c1fa6176d462cf4a08,
-    type: 3}
+  AIController: {fileID: 0}
 --- !u!212 &3586736334733061968
 SpriteRenderer:
   m_ObjectHideFlags: 0
