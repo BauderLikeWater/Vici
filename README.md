@@ -64,7 +64,7 @@ The following requirements are the recommended system requirments to play Vici a
 Vici is not limited to these requirements and may run on systems that are below or exceed 
 the following requirements:
 
-- Operating System: The latest edition of Windows or MacOS X.
+- Operating System: The latest edition of Windows 10 or MacOS X.
 - Hardware: 
   - CPU:      Intel i5 4770k or AMD equivalent.
   - RAM:      4GB of DDR3 RAM.
